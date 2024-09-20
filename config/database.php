@@ -29,10 +29,12 @@ class Database {
         }
     }
 
-    public function signup($username, $password) {
-        $stmt = $this->connection->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-        $stmt->bind_param("ss", $username, $password);
-        if ($stmt->execute()) {
+    public function signup($first_name, $last_name, $username, $password, $email) {
+        $stmt = $this->connection->prepare("INSERT INTO users (first_name, last_name, username, password, email) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $first_name, $last_name, $username, $password, $email);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
             return true;
         } else {
             return false;

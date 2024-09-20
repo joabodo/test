@@ -1,5 +1,23 @@
 <?php
 
+include '../config/database.php';
+
+$db = new Database();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $first_name = $_POST['fname'];
+    $last_name = $_POST['lname'];
+    $username = $_POST['uname'];
+    $password = $_POST['pass'];
+    $email = $_POST['email'];
+
+    if ($db->signup($first_name, $last_name, $username, $password, $email)) {
+        echo "Signup successful";
+    } else {
+        echo "Signup failed";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -33,18 +51,20 @@
                 <div class="w-full lg:w-1/2 mt-6 lg:mt-0 lg:pl-6">
                 <div class="flex flex-col justify-center items-center text-center h-full p-2">
                     <h2 class="text-[26px] leading-none font-bold mb-2">REGISTRATION FORM</h2>
-                    <form class="w-full mt-6">
+                    <form class="w-full mt-6" method="POST">
                     <div class="flex justify-center mb-4">
                         <input
                         type="text"
                         class="border-b border-black focus:outline-none focus:border-blue-600 py-2 text-sm w-1/2 mr-2"
                         id="fname"
+                        name="fname"
                         placeholder="First Name"
                         />
                         <input
                         type="text"
                         class="border-b border-black focus:outline-none focus:border-blue-600 py-2 text-sm w-1/2 ml-2"
                         id="lname"
+                        name="lname"
                         placeholder="Last Name"
                         />
                     </div>
@@ -53,6 +73,7 @@
                         type="text"
                         class="border-b border-black focus:outline-none focus:border-blue-600 text-sm w-full py-2"
                         id="uname"
+                        name="uname"
                         placeholder="Username"
                         />
                         <i class="fas fa-user absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
@@ -62,6 +83,7 @@
                         type="email"
                         class="border-b border-black focus:outline-none focus:border-blue-600 text-sm w-full py-2"
                         id="email"
+                        name="email"
                         placeholder="Email Address"
                         />
                         <i class="fas fa-envelope absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
@@ -71,6 +93,7 @@
                         type="pass"
                         class="border-b border-black focus:outline-none focus:border-blue-600 text-sm w-full py-2"
                         id="pass"
+                        name="pass"
                         placeholder="Password"
                         />
                         <i class="fas fa-lock absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
@@ -80,14 +103,13 @@
                         type="pass"
                         class="border-b border-black focus:outline-none focus:border-blue-600 text-sm w-full py-2"
                         id="con-pass"
+                        name="con-pass"
                         placeholder="Confirm Password"
                         />
                         <i class="fas fa-lock absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
                     </div>
 
-                    <button type="submit" class="bg-gray-700 py-4 px-10 text-white hover:bg-opacity-95 mt-4">
-                        Register <i class="fas fa-arrow-right"></i>
-                    </button>
+                    <input type="submit" class="bg-gray-700 py-4 px-10 text-white hover:bg-opacity-95 mt-4" value="Signup">
 
                     <div class="text-center mt-4">
                         <p class="mb-0 text-sm">

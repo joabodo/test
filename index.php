@@ -158,7 +158,7 @@
 
         <a href="signup/index.php">
         <button
-          class="py-3 px-8 font-medium text-white bg-blue-600 hover:bg-opacity-90 rounded"
+          class="py-3 px-8 font-medium text-white bg-blue-600 hover:bg-opacity-90"
         >
           Signup
         </button>
