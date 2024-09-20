@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup Page</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Modal Hidden by Default */
+        .modal {
+            display: none;
+        }
+        .modal-active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <div>
@@ -54,7 +63,6 @@
                         name="uname"
                         placeholder="Username"
                         />
-                        <i class="fas fa-user absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
                     </div>
                     <div class="w-full relative mb-4">
                         <input
@@ -64,27 +72,24 @@
                         name="email"
                         placeholder="Email Address"
                         />
-                        <i class="fas fa-envelope absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
                     </div>
                     <div class="w-full relative mb-4">
                         <input
-                        type="pass"
+                        type="password"
                         class="border-b border-black focus:outline-none focus:border-blue-600 text-sm w-full py-2"
                         id="pass"
                         name="pass"
                         placeholder="Password"
                         />
-                        <i class="fas fa-lock absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
                     </div>
                     <div class="w-full relative mb-4">
                         <input
-                        type="pass"
+                        type="password"
                         class="border-b border-black focus:outline-none focus:border-blue-600 text-sm w-full py-2"
                         id="con-pass"
                         name="con-pass"
                         placeholder="Confirm Password"
                         />
-                        <i class="fas fa-lock absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
                     </div>
 
                     <input type="submit" class="bg-gray-700 py-4 px-10 text-white hover:bg-opacity-95 mt-4" value="Signup">
@@ -106,15 +111,35 @@
     </section>
 
     </div>
-</body>
-</html>
 
+    <!-- Modal for Signup Failure -->
+    <div id="failureModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-5 w-1/3">
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-bold">Signup Failed</h2>
+                <button id="closeFailureModal" class="text-gray-500">&times;</button>
+            </div>
+            <p class="mt-4">There was a problem with your signup. Please try again.</p>
+        </div>
+    </div>
+
+    <!-- Modal for Signup Success -->
+    <div id="successModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-5 w-1/3">
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-bold">Signup Successful!</h2>
+                <button id="closeSuccessModal" class="text-gray-500">&times;</button>
+            </div>
+            <p class="mt-4">You have successfully signed up. You will be redirected shortly.</p>
+        </div>
+    </div>
 
 <?php
-
 include '../config/database.php';
 
 $db = new Database();
+$showFailureModal = false; // Variable to control failure modal display
+$showSuccessModal = false; // Variable to control success modal display
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $first_name = $_POST['fname'];
@@ -124,10 +149,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
 
     if ($db->signup($first_name, $last_name, $username, $password, $email)) {
-        echo "Signup successful";
+        $showSuccessModal = true; // Show success modal
+        // Add a short delay before redirection
+        echo '<script>
+            setTimeout(function() {
+                window.location.href = "../login/index.php";
+            }, 2000); // 2 seconds delay
+        </script>';
     } else {
-        echo "Signup failed";
+        $showFailureModal = true; // Show failure modal
     }
 }
-
 ?>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const failureModal = document.getElementById("failureModal");
+        const closeFailureModal = document.getElementById("closeFailureModal");
+
+        const successModal = document.getElementById("successModal");
+        const closeSuccessModal = document.getElementById("closeSuccessModal");
+
+        <?php if ($showFailureModal): ?>
+            failureModal.classList.add("modal-active"); // Show failure modal
+        <?php endif; ?>
+
+        <?php if ($showSuccessModal): ?>
+            successModal.classList.add("modal-active"); // Show success modal
+        <?php endif; ?>
+
+        closeFailureModal.addEventListener("click", function() {
+            failureModal.classList.remove("modal-active"); // Hide failure modal
+        });
+
+        closeSuccessModal.addEventListener("click", function() {
+            successModal.classList.remove("modal-active"); // Hide success modal
+        });
+
+        // Optional: Close modal when clicking outside of it
+        failureModal.addEventListener("click", function(event) {
+            if (event.target === failureModal) {
+                failureModal.classList.remove("modal-active");
+            }
+        });
+
+        successModal.addEventListener("click", function(event) {
+            if (event.target === successModal) {
+                successModal.classList.remove("modal-active");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
