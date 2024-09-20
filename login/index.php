@@ -1,21 +1,3 @@
-<?php
-
-require '../config/database.php';
-
-$db = new Database();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    if ($db->login($username, $password)) {
-        echo "Login successful";
-    } else {
-        echo "Login failed";
-    }
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,3 +72,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </body>
 </html>
+
+
+<?php
+
+require '../config/database.php';
+
+$db = new Database();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    if ($db->login($username, $password)) {
+        echo "Login successful";
+    } else {
+        echo "Login failed";
+    }
+}
+
+?>

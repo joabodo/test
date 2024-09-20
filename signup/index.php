@@ -1,25 +1,3 @@
-<?php
-
-include '../config/database.php';
-
-$db = new Database();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $first_name = $_POST['fname'];
-    $last_name = $_POST['lname'];
-    $username = $_POST['uname'];
-    $password = $_POST['pass'];
-    $email = $_POST['email'];
-
-    if ($db->signup($first_name, $last_name, $username, $password, $email)) {
-        echo "Signup successful";
-    } else {
-        echo "Signup failed";
-    }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -130,3 +108,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </body>
 </html>
+
+
+<?php
+
+include '../config/database.php';
+
+$db = new Database();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $first_name = $_POST['fname'];
+    $last_name = $_POST['lname'];
+    $username = $_POST['uname'];
+    $password = $_POST['pass'];
+    $email = $_POST['email'];
+
+    if ($db->signup($first_name, $last_name, $username, $password, $email)) {
+        echo "Signup successful";
+    } else {
+        echo "Signup failed";
+    }
+}
+
+?>
