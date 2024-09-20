@@ -30,7 +30,7 @@
                 <div class="w-full lg:w-1/2 mt-6 lg:mt-0 lg:pl-6">
                 <div class="flex flex-col justify-center items-center text-center h-full p-2">
                     <h2 class="text-[26px] leading-none font-bold mb-2">LOGIN FORM</h2>
-                    <form class="w-full mt-6" method="POST">
+                    <form class="w-full mt-6" method="POST" action="">
                     <div class="w-full relative mb-4">
                         <input
                         type="text"

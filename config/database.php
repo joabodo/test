@@ -6,7 +6,7 @@ class Database {
     public function __construct() {
         $username = "root";
         $password = "@.happy!";
-        $database = "server-admin";
+        $database = "server_admin";
         $host = "localhost";
 
         $this->connection = new mysqli($host, $username, $password, $database);
