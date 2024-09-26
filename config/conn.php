@@ -2,7 +2,7 @@
 
 $host = "localhost";
 $username = "root";
-$password = "@.happy!";
+$password = "suplexcity1.";
 $database = "server_admin";
 
 // Create connection
