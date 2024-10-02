@@ -100,28 +100,17 @@
     </div>
 
 <?php
-require '../config/database.php';
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "CAT1";
 
-$db = new Database();
-$showFailureModal = false; // Variable to control failure modal display
-$showSuccessModal = false; // Variable to control success modal display
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    if ($db->login($username, $password)) {
-        $showSuccessModal = true; // Show success modal
-        // Add a short delay before redirection
-        echo '<script>
-            setTimeout(function() {
-                window.location.href = "dashboard.php"; // Change this to your target page
-            }, 2000); // 2 seconds delay
-        </script>';
-    } else {
-        $showFailureModal = true; // Show failure modal
-    }
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
 ?>
 
 <script>
